@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Category(models.Model):
     name=models.CharField(max_length=200,unique=True)
 
-    def _str_(self):
+    def __str__(self):
         return self.name
     
 class Jobs(models.Model):
@@ -20,8 +20,15 @@ class Jobs(models.Model):
     qualification=models.CharField(max_length=200)
     category=models.ForeignKey(Category,on_delete=models.DO_NOTHING)
     status=models.BooleanField(default=True)
+    company=models.CharField(max_length=200,null=True)
+    created_date=models.DateTimeField(auto_now_add=True,null=True)
+    options=(
+        ("part-time","part-time"),
+        ("full-time","full-time")
+    )
+    job_type=models.CharField(max_length=200,choices=options,default="full-time")
 
-    def _str_(self) -> str:
+    def __str__(self) -> str:
         return self.title
     
 class StudentProfile(models.Model):
@@ -37,7 +44,10 @@ class StudentProfile(models.Model):
     address=models.CharField(max_length=200)
     phone=models.CharField(max_length=200)
     profile_pic=models.ImageField(upload_to="profilepics",null=True,blank=True)
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    user=models.OneToOneField(User,on_delete=models.CASCADE,related_name="profile")
+    
+    def __str__(self):
+         return self.user.username
 
 class Applications(models.Model):
     job=models.ForeignKey(Jobs,on_delete=models.DO_NOTHING)
@@ -54,5 +64,5 @@ class Projects(models.Model):
     git_link=models.CharField(max_length=200)
     user=models.ForeignKey(StudentProfile,on_delete=models.DO_NOTHING)
 
-    def _str_(self) -> str:
+    def __str__(self) -> str:
         return self.name

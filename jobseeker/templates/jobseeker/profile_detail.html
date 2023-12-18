@@ -1,0 +1,33 @@
+{%extends 'jobseeker/base.html'%}
+{%block bodyblock%}
+     <div class="container mt-5 d-flex justify-content-center">
+        <div class="card" style="width: 33%;">
+            {%if data.profile_pic%}
+                <img src="{{data.profile_pic.url}}" class="card-img-top" alt="..." height="200px">
+                {%else%}
+            {%endif%}
+            <img src="https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png" class="card-img-top" alt="">
+
+            
+            <div class="card-body">
+              <h5 class="card-title">{{data.user}}</h5>
+              <p class="card-text">
+                address:{{data.address}}
+                phone:{{data.phone}}
+                email:{{data.user.email}}
+              </p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Experience:{{data.experience}}</li>
+              <li class="list-group-item">gender:{{data.gender}}</li>
+              <li class="list-group-item">Qualification:{{data.qualification}}</li>
+            </ul>
+            <div class="card-body">
+                {%if data.resume%}
+              <a href="{{data.resume.url}}" download class="btn  btn-outline-info">Download Cv</a>
+              {%endif%}
+              
+            </div>
+          </div>
+     </div>
+{%endblock%}
